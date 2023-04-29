@@ -1,0 +1,82 @@
+import os
+import sys
+import logging
+from telegram import Update, Poll
+from telegram.ext import Updater, CommandHandler, MessageHandler, filters, CallbackContext
+
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level=logging.INFO
+)
+
+def start(update: Update, context: CallbackContext) -> None:
+    update.message.reply_text('Bot restarted. Hello! Send me a message with the poll details to create a quiz poll.')
+
+def help(update: Update, context: CallbackContext) -> None:
+    update.message.reply_text('Available commands:\n/start - Start the bot\n/help - Show this help message\n/poll - Create a quiz poll\n/stop - Stop the bot\n/restart - Restart the bot')
+
+def stop(update: Update, context: CallbackContext) -> None:
+    update.message.reply_text('Stopping the bot. Use /start to start the bot again.')
+    context.bot_data['stopped'] = True
+
+def restart(update: Update, context: CallbackContext) -> None:
+    update.message.reply_text('Restarting the bot...')
+    os.execl(sys.executable, sys.executable, *sys.argv)
+
+def poll(update: Update, context: CallbackContext) -> None:
+    # Check if the bot is stopped
+    if context.bot_data.get('stopped'):
+        return
+
+    # Split the message into separate questions
+    questions = update.message.text.split('\n\n')
+
+    # Create a poll for each question
+    for question_text in questions:
+        # Parse the poll details from the question text
+        try:
+            lines = question_text.split('\n')
+            question = lines[0].replace('$','')
+            options = lines[1:]
+            correct_option_index = len(options) - 1
+            for idx,option in enumerate(options):
+                if '$' in option:
+                    correct_option_index = idx
+                    options[idx] = option.replace('$','')
+        except Exception as e:
+            update.message.reply_text(f'Error: {e}\nPlease make sure the message is in the correct format.')
+            return
+
+        # Check the value of correct_option_index
+        print(f'correct_option_index: {correct_option_index}')
+
+        # Check the number of options
+        print(f'options: {options}')
+        if len(options) > 10:
+            update.message.reply_text(f'Error: Poll can\'t have more than 10 options.')
+            return
+
+        # Send the quiz poll
+        context.bot.send_poll(
+            chat_id=update.effective_chat.id,
+            question=question,
+            options=options,
+            type=Poll.QUIZ,
+            correct_option_id=correct_option_index
+        )
+
+def main():
+    updater = Updater("YOUR_TOKEN_HERE")
+    dispatcher = updater.dispatcher
+
+    dispatcher.add_handler(CommandHandler("start", start))
+    dispatcher.add_handler(CommandHandler("help", help))
+    dispatcher.add_handler(CommandHandler("stop", stop))
+    dispatcher.add_handler(CommandHandler("restart", restart))
+    dispatcher.add_handler(MessageHandler(filters.Filters.text & ~filters.Filters.command, poll))
+
+    updater.start_polling()
+    updater.idle()
+
+if __name__ == '__main__':
+    main()

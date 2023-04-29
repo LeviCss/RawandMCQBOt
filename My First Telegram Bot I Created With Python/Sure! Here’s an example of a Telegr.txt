@@ -1,0 +1,67 @@
+Sure! Here’s an example of a Telegram bot that allows you to create a quiz poll by sending it a message with the poll details:
+
+from telegram import Update
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
+
+def start(update: Update, context: CallbackContext) -> None:
+    update.message.reply_text('Hello! Send me a message with the poll details to create a quiz poll.')
+
+def poll(update: Update, context: CallbackContext) -> None:
+    # Parse the poll details from the user's message
+    lines = update.message.text.split('\n')
+    question = lines[0]
+    options = [line.split('. ')[1] for line in lines[1:]]
+    correct_option = next((option for option in options if option.startswith('*')), None)
+    if correct_option:
+        correct_option = correct_option[1:]
+        correct_option_index = options.index(correct_option)
+        options[correct_option_index] = correct_option
+    else:
+        update.message.reply_text('Please specify the correct answer by adding an asterisk (*) before the option letter.')
+        return
+
+    # Create the quiz poll
+    context.bot.send_poll(
+        update.effective_chat.id,
+        question,
+        options,
+        type='quiz',
+        correct_option_id=correct_option_index,
+        is_anonymous=True
+    )
+
+def main() -> None:
+    # Replace YOUR_TOKEN with the token provided by the BotFather
+    updater = Updater("YOUR_TOKEN")
+
+    dispatcher = updater.dispatcher
+    dispatcher.add_handler(CommandHandler("start", start))
+    dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, poll))
+
+    updater.start_polling()
+    updater.idle()
+
+if __name__ == '__main__':
+    main()
+This code creates a Telegram bot that responds to the /start command with a “Hello!” message and instructions on how to create a quiz poll. To create a quiz poll, you can send the bot a message with the poll details in the following format:
+
+Question
+A. Option 1
+B. Option 2
+C. Option 3
+D. Option 4
+You can specify the correct answer by adding an asterisk (*) before the option letter. For example:
+
+Question
+A. Option 1
+*B. Option 2
+C. Option 3
+D. Option 4
+When the bot receives a message in this format, it will parse the poll details and create an anonymous quiz poll in the current chat with one right answer.
+
+Is there anything else you would like to know?
+
+Received message. Sure! Here's an example of a Telegram bot that allows you to create a quiz poll by sending it a message with the poll details: ```python from telegram import Update from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext def start(update: Update, context: CallbackContext) -> None: update.message.reply_text('Hello! Send me a message with the poll details to create a quiz poll.') def poll(update: Update, context: CallbackContext) -> None: # Parse the poll details from the user's message lines = update.message.text.split('\n') question = lines[0] options = [line.split('. ')[1] for line in lines[1:]] correct_option = next((option for option in options if option.startswith('*')), None) if correct_option: correct_option = correct_option[1:] correct_option_index = options.index(correct_option) options[correct_option_index] = correct_option else: update.message.reply_text('Please specify the correct answer by adding an asterisk (*) before the option letter.') return # Create the quiz poll context.bot.send_poll( update.effective_chat.id, question, options, type='quiz', correct_option_id=correct_option_index, is_anonymous=True ) def main() -> None: # Replace YOUR_TOKEN with the token provided by the BotFather updater = Updater("YOUR_TOKEN") dispatcher = updater.dispatcher dispatcher.add_handler(CommandHandler("start", start)) dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, poll)) updater.start_polling() updater.idle() if __name__ == '__main__': main() ``` This code creates a Telegram bot that responds to the `/start` command with a "Hello!" message and instructions on how to create a quiz poll. To create a quiz poll, you can send the bot a message with the poll details in the following format: ``` Question A. Option 1 B. Option 2 C. Option 3 D. Option 4 ``` You can specify the correct answer by adding an asterisk (*) before the option letter. For example: ``` Question A. Option 1 *B. Option 2 C. Option 3 D. Option 4 ``` When the bot receives a message in this format, it will parse the poll details and create an anonymous quiz poll in the current chat with one right answer. Is there anything else you would like to know?
+20
+of
+20

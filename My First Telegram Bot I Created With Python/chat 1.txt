@@ -1,0 +1,59 @@
+when i want to make my telgram poll quiz maker make polls from my question list "Question 1: [Question text] A. [Option A] B. [Option B] C. [Option C] D. [Option D] E. $[Correct option] Question 2: [Question text] A. [Option A] B. [Option B] C. $[Correct option] D. [Option D] E. [Option E] Question 3: [Question text] A. $[Correct option] B. [Option B] C. [Option C] D. [Option D] E. [Option E]" it gives the following error in my log i will send the log error in two split parts
+
+
+
+
+
+2023-04-27 22:48:29,195 - apscheduler.scheduler - INFO - Scheduler started 2023-04-27 22:48:47,763 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception. Traceback (most recent call last): File "C:\Users\hrabs\AppData\Local\Programs\Python\Python311\Lib\site-packages\telegram\ext\dispatcher.py", line 447, in process_update handler.handle_update(update, self, check, context) File "C:\Users\hrabs\AppData\Local\Programs\Python\Python311\Lib\site-packages\telegram\ext\handler.py", line 160, in handle_update return self.callback(update, context) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ File "R:\RawandChatBoat\TelegramBot.py", line 56, in poll context.bot.send_poll( File "C:\Users\hrabs\AppData\Local\Programs\Python\Python311\Lib\site-packages\telegram\bot.py", line 127, in decorator
+
+
+
+
+
+
+result = func(*args, **kwargs) ^^^^^^^^^^^^^^^^^^^^^ File "C:\Users\hrabs\AppData\Local\Programs\Python\Python311\Lib\site-packages\telegram\bot.py", line 4778, in send_poll return self._message( # type: ignore[return-value] ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ File "C:\Users\hrabs\AppData\Local\Programs\Python\Python311\Lib\site-packages\telegram\bot.py", line 296, in _message result = self._post(endpoint, data, timeout=timeout, api_kwargs=api_kwargs) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ File "C:\Users\hrabs\AppData\Local\Programs\Python\Python311\Lib\site-packages\telegram\bot.py", line 259, in _post return self.request.post( ^^^^^^^^^^^^^^^^^^ File "C:\Users\hrabs\AppData\Local\Programs\Python\Python311\Lib\site-packages\telegram\utils\request.py", line 350, in post result = self._request_wrapper( ^^^^^^^^^^^^^^^^^^^^^^ File "C:\Users\hrabs\AppData\Local\Programs\Python\Python311\Lib\site-packages\telegram\utils\request.py", line 273, in _request_wrapper raise BadRequest(message) telegram.error.BadRequest: Poll can't have more than 10 options
+
+
+
+
+
+
+no i dont have 10 options i have 3 questios each has 5 options i want it to make 3 split question polls each 5 options this is the question look a like teplate "Question 1: [Question text] A. [Option A] B. [Option B] C. [Option C] D. [Option D] E. $[Correct option] Question 2: [Question text] A. [Option A] B. [Option B] C. $[Correct option] D. [Option D] E. [Option E] Question 3: [Question text] A. $[Correct option] B. [Option B] C. [Option C] D. [Option D] E. [Option E]"
+
+
+
+
+ok i will send the code in split parts
+
+
+
+
+
+import os import sys import logging from telegram import Update, Poll from telegram.ext import Updater, CommandHandler, MessageHandler, filters, CallbackContext logging.basicConfig( format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO ) def start(update: Update, context: CallbackContext) -> None: update.message.reply_text('Bot restarted. Hello! Send me a message with the poll details to create a quiz poll.') def help(update: Update, context: CallbackContext) -> None: update.message.reply_text('Available commands:\n/start - Start the bot\n/help - Show this help message\n/poll - Create a quiz poll\n/stop - Stop the bot\n/restart - Restart the bot') def stop(update: Update, context: CallbackContext) -> None: update.message.reply_text('Stopping the bot. Use /start to start the bot again.') context.bot_data['stopped'] = True def restart(update: Update, context: CallbackContext) -> None: update.message.reply_text('Restarting the bot...') os.execl(sys.executable, sys.executable, *sys.argv) def poll(update: Update, context: CallbackContext) -> None: # Check if the bot is stopped if context.bot_data.get('stopped'): return
+
+
+
+
+
+
+
+
+# Split the message into separate questions questions = update.message.text.split('\n\n') # Create a poll for each question for question_text in questions: # Parse the poll details from the question text try: lines = question_text.split('\n') question = lines[0] options = [] correct_option_index = None for index, line in enumerate(lines[1:]): if '.' in line: option = line.split('.')[1].strip() else: option = line.strip() if option.startswith('$'): correct_option_index = index option = option[1:] options.append(option) except Exception as e: update.message.reply_text(f'Error: {e}\nPlease make sure the message is in the correct format.') return # Send the quiz poll context.bot.send_poll( chat_id=update.effective_chat.id, question=question, options=options, type=Poll.QUIZ, correct_option_id=correct_option_index ) def main(): updater = Updater("6196671986:AAGCJZhO38v-53l7hE9j-8y9a1Iwi9fhFFI") dispatcher = updater.dispatcher dispatcher.add_handler(CommandHandler("start", start)) dispatcher.add_handler(CommandHandler("help", help)) dispatcher.add_handler(CommandHandler("stop", stop)) dispatcher.add_handler(CommandHandler("restart", restart)) dispatcher.add_handler(MessageHandler(filters.Filters.text & ~filters.Filters.command, poll)) updater.start_polling() updater.idle() if __name__ == '__main__': main()
+
+
+
+
+
+
+
+
+
+can you show me those suggetsions in code
+
+
+
+
+
+
+
+

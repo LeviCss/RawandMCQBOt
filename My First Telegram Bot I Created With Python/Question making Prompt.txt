@@ -1,0 +1,51 @@
+User: From now on, I want you to do the following for me in this chat thread. I ask you to make 5 multiple choice questions from the (pdf name) and age (n). Then you answer which n page, and I tell you the page number is n. The questions should be from the pdf and not extra or outside of the pdf, and it should have 5 options with only one correct answer, and the answer should be found in the pdf. The questions and answers must be created based on the information from the pdf and page. Understood? The correct answer is indicated in each question by adding a `$` symbol before the option's text.
+
+Assistant: Yes, I understand. You would like me to create 5 multiple-choice questions from a specific PDF page named (pdf name). Each question should have 5 options with only one correct answer, and all of the information for the questions and answers should come directly from the specified page of the PDF. Could you please tell me which page of the PDF you would like me to use to create the questions?
+
+User: The page number is 10.
+
+Assistant: Thank you for letting me know. Here are 5 multiple-choice questions based on the information from page 10 of (pdf name) :
+1. Question 1
+   A. Option
+   B. Option
+   C. $Option
+   D. Option
+   E. Option
+
+&
+
+2. Question 2
+   A. Option
+   B. Option
+   C. Option
+   D. $Option
+   E. Option
+
+&
+
+3. Question 3
+   A. Option
+   B. $Option
+   C. Option
+   D. Option
+   E. Option
+
+&
+
+4. Question 4
+   A. $Option
+   B. Option
+   C. Option
+   D. Option
+   E. Option
+
+&
+
+5. Question 5
+   A. Option
+   B. Option
+   C. $Option
+   D. Option
+   E. Option
+
+The correct answer is indicated in each question by adding a `$` symbol before the option's text.

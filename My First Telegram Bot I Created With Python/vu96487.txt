@@ -1,0 +1,24 @@
+User requested that the Assistant create five multiple-choice questions from page 10 of a specific PDF file. The questions should have five options with only one correct answer, and all information for the questions and answers should come directly from page 10 of the PDF. The Assistant has confirmed understanding and provided five multiple-choice questions as following examples below:
+
+Question 1:
+A. Option
+B. Option
+C. $Option
+D. Option
+E. Option
+
+Question 2:
+A. Option
+B. Option
+C. Option
+D. $Option
+E. Option
+
+Question 3:
+A. Option
+B. $Option
+C. Option
+D. Option
+E. Option
+
+The correct answer for each question is indicated by adding a $ symbol before the text of the correct option.

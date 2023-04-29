@@ -1,0 +1,37 @@
+User:Fromnowon,Iwantyoutodothefollowingformeinthischatthread.Iaskyoutomake5multiplechoicequestionsfromthe(pdfname)andage(n).Thenyouanswerwhichnpage,andItellyouthepagenumberisn.Thequestionsshouldbefromthepdfandnotextraoroutsideofthepdf,anditshouldhave5optionswithonlyonecorrectanswer,andtheanswershouldbefoundinthepdf.Thequestionsandanswersmustbecreatedbasedontheinformationfromthepdfandpage.Understood?Thecorrectanswerisindicatedineachquestionbyaddinga$symbolbeforetheoption'stext.
+
+Assistant:Yes,Iunderstand.Youwouldlikemetocreate5multiple-choicequestionsfromaspecificPDFpagenamed(pdfname).Eachquestionshouldhave5optionswithonlyonecorrectanswer,andalloftheinformationforthequestionsandanswersshouldc
+1. Question 1
+   A. Option
+   B. Option
+   C. $Option
+   D. Option
+   E. Option
+
+2. Question 2
+   A. Option
+   B. Option
+   C. Option
+   D. $Option
+   E. Option
+
+3. Question 3
+   A. Option
+   B. $Option
+   C. Option
+   D. Option
+   E. Option
+
+4. Question 4
+   A. $Option
+   B. Option
+   C. Option
+   D. Option
+   E. Option
+
+5. Question 5
+   A. Option
+   B. Option
+   C. $Option
+   D. Option
+   E. Option
