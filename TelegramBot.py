@@ -164,7 +164,7 @@ def export_message_ids(update: Update, context: CallbackContext) -> None:
     os.unlink(temp_file_name)
 
 def main():
-    updater = Updater("6196671986:AAGCJZhO38v-53l7hE9j-8y9a1Iwi9fhFFI")
+    updater = Updater("Your_Token")
     dispatcher = updater.dispatcher
 
     dispatcher.add_handler(CommandHandler("start", start))
